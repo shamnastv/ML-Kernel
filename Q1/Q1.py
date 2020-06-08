@@ -27,18 +27,19 @@ def main():
         x = np.random.uniform(low=-5, high=5, size=3).reshape(-1, 1)
         X.append(x)
     for i in range(4):
-        filename = 'Q1/function' + str(i + 1) + '.pkl'
+        filename = 'function' + str(i + 1) + '.pkl'
         func = get_fun(filename)
-        print(is_valid(X, func, n))
-    sampler_file = 'Q1/k5sampler.pkl'
-    filename = 'Q1/function5.pkl'
+        print(i+1, ' : ', is_valid(X, func, n))
+    sampler_file = 'k5sampler.pkl'
+    filename = 'function5.pkl'
     sampler = get_fun(sampler_file)
     func = get_fun(filename)
     Y = []
     for i in range(n):
         y = sampler()
         Y.append(y)
-    print(is_valid(Y, func, n))
+    print(5, ' : ', is_valid(Y, func, n))
 
 
-main()
+if __name__ == '__main__':
+    main()

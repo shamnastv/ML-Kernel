@@ -16,8 +16,7 @@ def get_coeff(x, y):
 
 
 def prediction(x, x_t, y, b):
-    plt.scatter(x, y, color="m",
-                marker="o", s=3)
+    plt.scatter(x, y, color='m', marker='o', s=3)
 
     y_pred = b[0] + np.dot(x_t, b[1]).reshape(-1, 1)
 
@@ -25,7 +24,7 @@ def prediction(x, x_t, y, b):
     print('mse train ', mse)
 
     new_x, new_y = zip(*sorted(zip(x, y_pred)))
-    plt.plot(new_x, new_y, color="g")
+    plt.plot(new_x, new_y, color='g')
     plt.xlabel('x')
     plt.ylabel('y')
 
@@ -62,15 +61,12 @@ def pred_kernel(x, y, x_test, y_test):
     print('mse test ', mse_test)
 
     # Plotting Train
-    plt.scatter(x, y, color="m", marker="o", s=3)
-    plt.scatter(x, y_pred_train, color="g", marker="o", s=3)
+    plt.scatter(x, y, color='m', marker='o', s=3)
+    plt.scatter(x, y_pred_train, color='g', marker='o', s=3)
 
-    # Plotting Test
-    # plt.scatter(x_test, y_test, color="y", marker="o", s=3)
-    # plt.scatter(x_test, y_pred_test, color="r", marker="o", s=3)
-
+    #Plotting Function
     new_x, new_y = zip(*sorted(zip(x, y_pred_train)))
-    plt.plot(new_x, new_y, color="g")
+    plt.plot(new_x, new_y, color='g')
 
     plt.xlabel('x')
     plt.ylabel('y')
@@ -94,34 +90,32 @@ def main():
     y = np.sin(3 * x)
 
     # Part a
-    print('\nPart a\n')
-    plt.scatter(x, y, color="m", marker="o", s=3)
+    print('\n============Part A===========')
+    plt.scatter(x, y, color='m', marker='o', s=3)
     plt.show()
 
     # Part b
-    print('\nPart b\n')
+    print('\n============Part B===========')
     x_t = transform(x, 1)
     b, w = get_coeff(x_t, y)
-    print("Estimated coefficients:\nb = {}  \nw = {}".format(b, w[0]))
     prediction(x, x_t, y, (b, w))
 
     # Part c
-    print('\nPart c\n')
+    print('\n============Part C===========')
     for k in range(10):
         x_t = transform(x, k+1)
 
         b, w = get_coeff(x_t, y)
-        # print("Estimated coefficients:\nb = {}  \nw = {}".format(b, w))
         print('k = ', k + 1,)
         prediction(x, x_t, y, (b, w))
 
     # Part d
-    print('\nPart d\n')
+    print('\n============Part D===========')
     x_test = np.random.uniform(low=-1, high=1, size=100)
     y_test = np.sin(3 * x_test)
 
     pred_kernel(x, y, x_test, y_test)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

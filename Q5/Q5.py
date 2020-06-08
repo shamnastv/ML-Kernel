@@ -7,14 +7,14 @@ def kernel_fn(x1, x2):
     return np.dot(x1, x2) + np.dot(x1, x2) ** 2
 
 
-def get_theta(p1, p2):
-    p1.sort()
-    p2.sort()
-    if p1[0] > p2[-1]:
-        return (p2[-1] + p1[0]) / 2
-    elif p2[0] > p1[-1]:
-        return (p1[-1] + p2[0]) / 2
-    print("Not found")
+def get_theta(projection1, projection2):
+    projection1.sort()
+    projection2.sort()
+    if projection1[0] > projection2[-1]:
+        return (projection2[-1] + projection1[0]) / 2
+    elif projection2[0] > projection1[-1]:
+        return (projection1[-1] + projection2[0]) / 2
+    print('Not found')
     sys.exit(0)
 
 
@@ -47,21 +47,19 @@ def main():
     plt.show()
 
     # Part c
-    S1 = np.zeros((2, 2))
-    S2 = np.zeros((2, 2))
     m1 = np.mean(C1, axis=0)
     m2 = np.mean(C2, axis=0)
-    print(m1)
-    print(m2)
+    S1 = np.zeros((2, 2))
+    S2 = np.zeros((2, 2))
+
     for i in range(n):
         x1 = (C1[i] - m1).reshape(-1, 1)
         x2 = (C2[i] - m2).reshape(-1, 1)
         S1 += np.dot(x1, x1.transpose())
         S2 += np.dot(x2, x2.transpose())
     SW = S1 + S2
-    SW_inv = np.linalg.inv(SW)
-    w = np.dot(SW_inv, (m2 - m1).reshape(-1, 1))
-    print(w)
+    w = np.dot(np.linalg.inv(SW), (m2 - m1).reshape(-1, 1))
+
     plt.scatter(C1[:, 0], C1[:, 1], color='g')
     plt.scatter(C2[:, 0], C2[:, 1], color='r')
     plt.quiver(0, 0, w[0], w[1], color='g', scale=0.05)
@@ -90,8 +88,8 @@ def main():
     for i in range(2 * n):
         for j in range(n):
             K1[i][j] = kernel_fn(x[i], c1[j])
-        for j in range(n):
             K2[i][j] = kernel_fn(x[i], c2[j])
+
     N = np.dot(K1, np.dot((I - I1), K1.transpose())) + np.dot(K2, np.dot((I - I1), K2.transpose()))
     alpha = np.dot(np.linalg.inv(N + epsilon * np.eye((2 * n))), (M2 - M1))
     projections = []
@@ -110,4 +108,5 @@ def main():
     plt.show()
 
 
-main()
+if __name__ == '__main__':
+    main()
